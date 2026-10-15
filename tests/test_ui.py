@@ -37,7 +37,9 @@ async def test_index_and_health():
         h = await c.get("/health")
     assert r.status_code == 200 and "Statute Finder India" in r.text and "/page-image?chunk_id=" in r.text
     assert "Informational, not legal advice" in r.text
-    assert h.json() == {"status": "ok"}
+    body = h.json()
+    assert body["status"] == "ok"
+    assert body["build"]            # marker of the code this process loaded (shown in the page footer)
 
 
 @pytest.mark.asyncio
