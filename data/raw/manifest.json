@@ -1,0 +1,172 @@
+{
+  "files": [
+    {
+      "file": "bns_2023.pdf",
+      "role": "corpus",
+      "act_short_name": "bns_2023",
+      "act_title": "Bharatiya Nyaya Sanhita",
+      "year": 2023,
+      "jurisdiction": "central",
+      "body_pages": [
+        1,
+        102
+      ],
+      "toc_pages": null,
+      "titles_in_text": false,
+      "expected_sections": 358,
+      "expected_basis": "third-party sources cite 358; the file has no table of contents",
+      "drop_spans": [
+        {
+          "page": 1,
+          "from": "vlk/kkj.k",
+          "to": "CG-DL-E-25122023-250883"
+        }
+      ],
+      "source_url": "https://www.mha.gov.in/sites/default/files/2024-04/250883_english_01042024.pdf",
+      "version_note": "As enacted (Gazette, 25 Dec 2023, Act 45 of 2023). Commencement date not yet verified from an official source.",
+      "sha256": "c9da896e7a16c481a46235789f74f545b7a9ed7f3a5c8049d0b1b9252c6731f4",
+      "page_count": 102,
+      "retrieved_at": "2026-10-14T18:16+05:30",
+      "retrieved_at_basis": "file modification time on the machine that downloaded it"
+    },
+    {
+      "file": "arms_act_1959.pdf",
+      "role": "corpus",
+      "act_short_name": "arms_act_1959",
+      "act_title": "Arms Act",
+      "year": 1959,
+      "jurisdiction": "central",
+      "body_pages": [
+        3,
+        26
+      ],
+      "toc_pages": [
+        1,
+        2
+      ],
+      "titles_in_text": true,
+      "expected_sections": 48,
+      "expected_basis": "count of the file's arrangement of sections",
+      "source_url": "https://indiacode.gov.in/pdf-viewer/78a46eb4-21bf-49ee-bd08-6b8e8655631c/6330f0c6-34aa-48fe-a110-43253c8c784c",
+      "version_note": "India Code consolidated copy; 'as on' date not stated in the file.",
+      "sha256": "93bf306afce4d51b0bf794c10efd0554e2c7b7604ab46a75e9ca4bb328e59c47",
+      "page_count": 26,
+      "retrieved_at": "2026-10-14T18:32+05:30",
+      "retrieved_at_basis": "file modification time on the machine that downloaded it"
+    },
+    {
+      "file": "it_act_2000.pdf",
+      "role": "corpus",
+      "act_short_name": "it_act_2000",
+      "act_title": "Information Technology Act",
+      "year": 2000,
+      "jurisdiction": "central",
+      "body_pages": [
+        5,
+        35
+      ],
+      "toc_pages": [
+        1,
+        4
+      ],
+      "titles_in_text": true,
+      "expected_sections": 125,
+      "expected_basis": "count of the file's arrangement of sections",
+      "source_url": "https://indiacode.gov.in/pdf-viewer/d41fe391-b9c0-40b1-afdc-ad034c7ac62f/770a7d02-48f2-4274-bab9-10d0f48ee264",
+      "version_note": "India Code consolidated copy; 'as on' date not stated in the file.",
+      "sha256": "e71725fa32e892f887308816046c42275fc855b5cbb4ee1063cdbd518f165140",
+      "page_count": 36,
+      "retrieved_at": "2026-10-14T18:18+05:30",
+      "retrieved_at_basis": "file modification time on the machine that downloaded it"
+    },
+    {
+      "file": "mv_act_1988.pdf",
+      "role": "corpus",
+      "act_short_name": "mv_act_1988",
+      "act_title": "Motor Vehicles Act",
+      "year": 1988,
+      "jurisdiction": "central",
+      "body_pages": [
+        10,
+        120
+      ],
+      "toc_pages": [
+        3,
+        9
+      ],
+      "titles_in_text": true,
+      "expected_sections": 257,
+      "expected_basis": "count of the file's arrangement of sections",
+      "source_url": "https://indiacode.gov.in/pdf-viewer/2bbbcc40-38f1-4b15-ae94-646b85db4ee7/1d30ea4a-1331-4791-89bf-b820172bf790",
+      "version_note": "India Code consolidated copy, 'As on the 15th August, 2026' (file page 1). First Schedule (pp. 121-172) is image-only and not ingested.",
+      "sha256": "09d232b162f6173ce47f18ed99be67576249ca8cdf1de0fedeebb103ef0773b2",
+      "page_count": 176,
+      "retrieved_at": "2026-10-14T18:31+05:30",
+      "retrieved_at_basis": "file modification time on the machine that downloaded it"
+    },
+    {
+      "file": "ipc_1860.pdf",
+      "role": "not_ingested",
+      "act_short_name": "ipc_1860",
+      "act_title": "Indian Penal Code",
+      "year": 1860,
+      "jurisdiction": "central",
+      "source_url": "https://www.hyderabadpolice.gov.in/PDF/acts/Indianpenalcode1860.pdf",
+      "version_note": "Police-department website print with commentary blocks; not an official source; not ingested (decision 15).",
+      "sha256": "a413b050ad22f7075e0ea4297fb315a71b44f6fc419cd28bf207548b9a74856d",
+      "page_count": 258,
+      "retrieved_at": "2026-10-14T18:51+05:30",
+      "retrieved_at_basis": "file modification time on the machine that downloaded it"
+    },
+    {
+      "file": "tn_dangerous_activities_1982.pdf",
+      "role": "not_ingested",
+      "act_short_name": "tn_dangerous_activities_1982",
+      "act_title": "Tamil Nadu Prevention of Dangerous Activities Act",
+      "year": 1982,
+      "jurisdiction": "tamil_nadu",
+      "source_url": "https://prsindia.org/files/bills_acts/acts_states/tamil-nadu/1982/1982TN14.pdf",
+      "version_note": "PRS India OCR scan with visible OCR errors; not ingested (decision 17).",
+      "sha256": "905f27f562fe14b97bbc82b237066a951f4e4a9f3f39978ab0c4e879a8975930",
+      "page_count": 32,
+      "retrieved_at": "2026-10-14T01:13+05:30",
+      "retrieved_at_basis": "file modification time on the machine that downloaded it"
+    },
+    {
+      "file": "bns_ipc_comparison_keralaprisons.pdf",
+      "role": "mapping",
+      "act_short_name": null,
+      "act_title": "Correspondence table and comparison summary BNS to IPC",
+      "year": 2023,
+      "jurisdiction": "central",
+      "source_url": "https://www.keralaprisons.gov.in/userfiles/act-and-rules/comparison_summary_BNS_to_IPC.pdf",
+      "version_note": "Credited to Anil Kishore Yadav, IPS, Director CAPT Bhopal; not an MHA publication.",
+      "sha256": "3ad875b6162deb9d6a722244c537b1ffa72ee20e025f08a32d272f2612cf9a25",
+      "page_count": 38,
+      "retrieved_at": "2026-10-14T01:13+05:30",
+      "retrieved_at_basis": "file modification time on the machine that downloaded it"
+    },
+    {
+      "file": "tn_harassment_women_1998.pdf",
+      "role": "corpus",
+      "act_short_name": "tn_harassment_women_1998",
+      "act_title": "Tamil Nadu Prohibition of Harassment of Women Act",
+      "year": 1998,
+      "jurisdiction": "tamil_nadu",
+      "body_pages": [
+        1,
+        4
+      ],
+      "toc_pages": null,
+      "titles_in_text": true,
+      "expected_sections": 14,
+      "expected_basis": "continuity of section numbers; the file has no table of contents",
+      "source_url": "https://www.tnscw.tn.gov.in/departments_cms/uploads/tami_868/subpage_files/The_Tamil_Nadu_Prohibition_Of_Harassment_Of_Women_Act_1998.PDF",
+      "version_note": "Indian Kanoon print hosted on a TN government site: 'version of this document from 21 December 2016'; the file states its content could not be verified. s.5(1) clauses are missing in the source.",
+      "sha256": "d0133e0d304fb21f6539762f0a2791d7247ef25cd928ca0d8d6a5ce3f6cf832f",
+      "page_count": 4,
+      "retrieved_at": "2026-10-14T19:47+05:30",
+      "retrieved_at_basis": "file modification time on the machine that downloaded it"
+    }
+  ]
+}

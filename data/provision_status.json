@@ -1,0 +1,25 @@
+{
+  "_comment": "Curated legal-status flags (decision 40). A flagged provision is still shown, with a warning. 'verification': 'source_located' = an authoritative source was found by search but the document itself was not read by the tool author; 'third_party_only' = reported by news/legal outlets only. Review before relying on any entry.",
+  "entries": [
+    {
+      "act": "it_act_2000",
+      "section": "66A",
+      "status": "struck_down",
+      "scope": "whole section",
+      "note": "Held unconstitutional and struck down by the Supreme Court of India in Shreya Singhal v. Union of India (24 March 2015). The text still appears in consolidated copies of the Act. It is not an operative offence.",
+      "source_url": "https://indiankanoon.org/doc/110813550/",
+      "source_label": "Shreya Singhal v. Union of India, 24 March 2015 (Indian Kanoon; also in the Supreme Court digital reports: https://digiscr.sci.gov.in/view_judgment?id=OTMwMQ==)",
+      "verification": "source_located"
+    },
+    {
+      "act": "bns_2023",
+      "section": "106",
+      "status": "not_in_force",
+      "scope": "sub-section (2) only (death by rash or negligent driving followed by escape without reporting)",
+      "note": "Reported to be excluded from the commencement of the BNS by the Ministry of Home Affairs notification of 23 February 2024 (S.O. 850(E)), with implementation put on hold. Sub-section (1) is in force. The notification itself has not been checked against the Gazette.",
+      "source_url": "https://www.verdictum.in/news/new-criminal-bills-ministry-of-home-affairs-notifications-1522238",
+      "source_label": "Verdictum news report on the MHA notifications (third-party)",
+      "verification": "third_party_only"
+    }
+  ]
+}
