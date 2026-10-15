@@ -1,0 +1,10 @@
+venv/
+.venv/
+.git/
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+eval/results.json
+data/raw/ipc_1860.pdf
+data/raw/tn_dangerous_activities_1982.pdf

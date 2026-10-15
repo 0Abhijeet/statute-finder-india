@@ -1,0 +1,24 @@
+venv/
+.venv/
+
+# python cache
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# secrets: never commit; .env.example is the committed template
+.env
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# source PDFs that are not ingested (third-party / not official); keep local only
+data/raw/ipc_1860.pdf
+data/raw/tn_dangerous_activities_1982.pdf
+
+# eval run artefacts (REPORT.md and cases.jsonl are committed)
+eval/results.json
+eval/partial_*.jsonl
+eval_run*.log
+eval/results*.json

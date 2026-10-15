@@ -1,0 +1,18 @@
+# Render Blueprint (optional: you can also create the service by hand in the dashboard).
+services:
+  - type: web
+    name: statute-finder-india
+    runtime: docker
+    plan: free             # 512 MB: measured peak working set about 290 MB locally (retrieval + page images)
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL      # Neon connection string (include ?sslmode=require)
+        sync: false
+      - key: LLM_API_KEY       # Groq API key
+        sync: false
+      - key: LLM_MODEL
+        value: openai/gpt-oss-20b
+      - key: LLM_BASE_URL
+        value: https://api.groq.com/openai/v1
+      - key: EMBED_BATCH_SIZE
+        value: "8"
