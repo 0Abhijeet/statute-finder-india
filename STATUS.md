@@ -135,3 +135,5 @@ Note: India Code `pdf-viewer/<uuid>/<uuid>` URLs are viewer links; whether they 
 - Unit tests pass (figure check incl. number words, answer tags, non-applicable filter). DB-backed tests for the two new end-to-end tests need Docker Desktop running (it was closed): run `python -m pytest -q` with DATABASE_URL=...statutedb_test.
 - Pending the user's yes (asked, not done): attempt wording ("tried to stab") should ask 'was anyone hurt' not severity; hide inferred 'no' values in 'Facts understood'.
 - Not re-run on the hosted Groq model (token cap). qwen2.5:7b output quality for summaries is mixed (one s.101 summary was off-topic): the hosted model may do better but is unmeasured.
+
+- 2026-10-16: card AM decided: leave as is (decision 55); the s.101 inversion stays disclosed in README and PROJECT_DETAILS.
