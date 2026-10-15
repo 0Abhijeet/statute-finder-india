@@ -22,3 +22,7 @@ eval/results.json
 eval/partial_*.jsonl
 eval_run*.log
 eval/results*.json
+
+# drafting material for the outreach email: kept locally, not published
+EMAIL_DRAFT.md
+project_docs/OUTREACH_BRIEF.md
