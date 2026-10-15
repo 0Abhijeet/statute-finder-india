@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Statute Finder India</title>
+<style>
+  :root { --bg:#f6f5f1; --card:#fff; --ink:#1d1d1b; --muted:#625f58; --line:#d9d6cc; --accent:#1f4e79;
+          --warn-bg:#fdecea; --warn:#9a1b13; --note-bg:#eef3f8; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#16181b; --card:#1f2226; --ink:#ececec; --muted:#a2a6ad; --line:#363a40; --accent:#7db3e8;
+            --warn-bg:#3a1e1c; --warn:#ff9a90; --note-bg:#1b2733; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 system-ui, -apple-system, Segoe UI, sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 20px 16px 60px; }
+  h1 { font-size: 1.35rem; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 18px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin:12px 0; }
+  label { font-weight:600; display:block; margin-bottom:6px; }
+  textarea, input[type=date] { width:100%; font:inherit; color:inherit; background:var(--bg); border:1px solid var(--line);
+          border-radius:8px; padding:10px; }
+  textarea { min-height: 96px; resize: vertical; }
+  .row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin-top:12px; }
+  .row > div { flex: 1 1 180px; }
+  button { font:inherit; background:var(--accent); color:#fff; border:0; border-radius:8px; padding:10px 18px; cursor:pointer; }
+  button.link { background:none; color:var(--accent); padding:0; text-decoration:underline; }
+  button:disabled { opacity:.6; cursor:wait; }
+  .examples button { background:var(--note-bg); color:var(--ink); border:1px solid var(--line); margin:4px 6px 0 0; padding:6px 10px; font-size:.9rem; }
+  .group h3 { margin:0 0 6px; font-size:1.02rem; }
+  .cite { font-weight:600; }
+  .quote { white-space:pre-wrap; background:var(--bg); border-left:3px solid var(--accent); padding:8px 10px; margin:8px 0;
+           font-family: ui-serif, Georgia, serif; font-size:.95rem; max-height:11em; overflow:auto; }
+  .quote.open { max-height:none; }
+  .why { color:var(--muted); font-size:.95rem; }
+  .warn { background:var(--warn-bg); color:var(--warn); border-radius:8px; padding:8px 10px; margin:8px 0; font-weight:600; }
+  .note { background:var(--note-bg); border-radius:8px; padding:8px 10px; margin:8px 0; font-size:.95rem; }
+  .meta { color:var(--muted); font-size:.88rem; }
+  img.page { max-width:100%; border:1px solid var(--line); border-radius:8px; margin-top:8px; }
+  ul.limits { color:var(--muted); font-size:.9rem; padding-left:20px; }
+  .q { font-weight:600; }
+  .err { color:var(--warn); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Statute Finder India</h1>
+  <p class="sub">Describe an incident. See which sections of the BNS, Arms Act, Motor Vehicles Act, IT Act and the
+     Tamil Nadu Harassment of Women Act may apply, with the exact text and page of the source.
+     <strong>Informational, not legal advice.</strong></p>
+
+  <form id="f" class="card">
+    <label for="incident">What happened?</label>
+    <textarea id="incident" maxlength="2000" placeholder="e.g. A person stabs someone with a knife during an argument."></textarea>
+    <div class="examples" id="examples"></div>
+    <div class="row">
+      <div><label for="date">Incident date (optional)</label><input type="date" id="date"></div>
+      <div><button id="go" type="submit">Find sections</button></div>
+    </div>
+    <p class="meta">If no date is given, today's date is assumed. Incidents before 1 July 2024 are routed to the IPC
+       (shown through the IPC&harr;BNS comparison table).</p>
+  </form>
+
+  <div id="out" aria-live="polite"></div>
+  <p class="meta" id="build"></p>
+</main>
+
+<script>
+const EXAMPLES = [
+  ["Knife attack", "A person stabs someone with a knife during an argument and causes an injury.", ""],
+  ["Theft, before July 2024", "Someone secretly takes a stranger's phone from their bag without permission.", "2022-03-10"],
+  ["Theft, after July 2024", "Someone secretly takes a stranger's phone from their bag without permission.", "2025-03-10"],
+  ["Cyber fraud (two acts)", "A man pretended to be someone else on social media and cheated a woman of money by getting her to transfer it online.", ""],
+  ["Struck-down provision", "A person sends threatening messages to a woman on social media and posts her private photographs online.", ""],
+  ["Out of scope", "My landlord is refusing to return my security deposit after I vacated the flat.", ""],
+];
+const $ = (id) => document.getElementById(id);
+const out = $("out");
+
+function el(tag, props = {}, ...kids) {
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(props)) {
+    if (k === "class") n.className = v; else if (k === "text") n.textContent = v; else n.setAttribute(k, v);
+  }
+  for (const c of kids) if (c) n.append(c);
+  return n;
+}
+
+for (const [label, text, date] of EXAMPLES) {
+  const b = el("button", { type: "button", text: label });
+  b.onclick = () => { $("incident").value = text; $("date").value = date; };
+  $("examples").append(b);
+}
+
+const ANSWER_LABELS = {
+  no_injury: "Nobody was hurt (attempt only)", hurt: "Minor hurt", grievous_hurt: "Serious or permanent injury", death: "The person died",
+  sharp: "A sharp object (for example a knife)", firearm: "A firearm", other: "Another object", none: "No weapon",
+};
+const ACT_SHORT = { bns_2023: "BNS", arms_act_1959: "Arms Act", mv_act_1988: "MV Act", it_act_2000: "IT Act",
+                    tn_harassment_women_1998: "TN Harassment Act" };
+const answerLabel = (v) => ANSWER_LABELS[v] || v;
+function shortRef(anchor) {
+  const [act, sec] = anchor.split(":");
+  return `${ACT_SHORT[act] || act} ${sec.replace(/^s/, "s.")}`;
+}
+
+function itemView(it) {
+  const card = el("div", { class: "card" });
+  card.append(el("div", { class: "cite", text: it.citation }));
+  if (it.legal_status) {
+    const ls = it.legal_status;
+    const w = el("div", { class: "warn", text: ls.warning });
+    w.append(el("div", { class: "meta", text: ls.verification_note + " " }));
+    w.lastChild.append(el("a", { href: ls.source_url, target: "_blank", rel: "noopener", text: ls.source_label.split(" (")[0] }));
+    card.append(w);
+  }
+  if (it.label) card.append(el("div", { class: "note", text: it.label }));
+  if (it.ipc_equivalents && it.ipc_equivalents.length) {
+    const refs = it.ipc_equivalents.map(e => `IPC ${e.ipc_ref} (BNS ${e.bns_ref}): ${e.change_summary}`).join("\n");
+    const n = el("div", { class: "note" });
+    n.append(el("strong", { text: "IPC equivalent (from a comparison table, not an MHA publication): " }));
+    n.append(el("div", { text: refs, style: "white-space:pre-wrap;margin-top:4px" }));
+    n.append(el("div", { class: "meta", text: it.ipc_equivalents[0].mapping_source }));
+    card.append(n);
+  }
+  card.append(el("div", { class: "why", text: "Why it may apply (model-written, not statute text): " + it.why_it_applies }));
+  if (it.plain_summary) {
+    const ps = el("div", { class: "note" });
+    ps.append(el("strong", { text: "In plain words " }));
+    ps.append(el("span", { class: "meta", text: "(model-written reading aid for the passage below; not statute text, may be incomplete)" }));
+    ps.append(el("div", { text: it.plain_summary, style: "margin-top:4px" }));
+    if (it.punishment) {
+      const pd = el("div", { style: "margin-top:6px" });
+      pd.append(el("strong", { text: "Punishment: " }), it.punishment);
+      ps.append(pd);
+    }
+    if (it.applies_when && it.applies_when.length) {
+      const aw = el("div", { style: "margin-top:6px" });
+      aw.append(el("strong", { text: "Applies when:" }));
+      const ul = el("ul", { style: "margin:2px 0 0 0;padding-left:20px" });
+      it.applies_when.forEach(x => ul.append(el("li", { text: x })));
+      aw.append(ul);
+      ps.append(aw);
+    }
+    card.append(ps);
+  }
+  const mkQuote = (label, txt) => {
+    const wrap = el("div");
+    wrap.append(el("div", { class: "meta", text: label }));
+    const q = el("div", { class: "quote", text: txt });
+    q.title = "Click to expand";
+    q.onclick = () => q.classList.toggle("open");
+    wrap.append(q);
+    return wrap;
+  };
+  if (it.opening_quote) {
+    card.append(mkQuote("Section text (opening), verbatim from the source:", it.opening_quote));
+    card.append(mkQuote("Best-matching passage in this section, verbatim:", it.quote));
+  } else {
+    card.append(mkQuote("Section text, verbatim from the source:", it.quote));
+  }
+  const meta = el("div", { class: "meta" });
+  meta.append(`Source: ${it.source_file}, ${it.page_start === it.page_end ? "page " + it.page_start : "pages " + it.page_start + "-" + it.page_end}; retrieved ${it.retrieved_at.slice(0, 10)}. `);
+  meta.append(el("a", { href: it.source_url, target: "_blank", rel: "noopener", text: "Official source" }));
+  card.append(meta);
+  const showId = it.opening_chunk_id || it.chunk_id;
+  if (showId) {
+    const holder = el("div");
+    const btn = el("button", { class: "link", type: "button", text: "Show the cited page with the quote highlighted" });
+    btn.onclick = () => {
+      holder.replaceChildren(el("img", { class: "page", src: "/page-image?chunk_id=" + showId, alt: "Source page with the quote highlighted" }));
+    };
+    card.append(el("div", {}, btn), holder);
+  }
+  return card;
+}
+
+function render(d) {
+  out.replaceChildren();
+  const info = el("div", { class: "card" });
+  info.append(el("div", { class: "meta", text: d.date.note }));
+  const f = Object.entries(d.facts).filter(([, v]) => v !== "unknown" && v !== "no" && v !== "none");
+  if (f.length) info.append(el("div", { class: "meta", text: "Facts understood: " + f.map(([k, v]) => `${k.replaceAll("_", " ")}: ${v}`).join("; ") }));
+  out.append(info);
+
+  const a = d.answer;
+  if (d.questions && d.questions.length) {
+    const qc = el("div", { class: "card note" });
+    qc.append(el("div", { class: "meta", text: "To narrow this down:" }));
+    d.questions.forEach(q => {
+      qc.append(el("div", { class: "q", text: q.question }));
+      const cond = (d.open_conditions || []).find(c => c.fact === q.fact);
+      if (!cond || a.abstained) return;
+      const rows = cond.values.map(v => {
+        const refs = [];
+        a.groups.filter(g => g.answer_to === v).forEach(g => g.items.forEach(it => refs.push(shortRef(it.anchor))));
+        return [v, refs];
+      }).filter(([, refs]) => refs.length);
+      if (!rows.length) return;
+      const box = el("div", { class: "meta", style: "margin:6px 0 10px 0" });
+      box.append(el("div", { text: "Provisional candidates, depending on the answer:" }));
+      const ul = el("ul", { style: "margin:4px 0 0 0;padding-left:20px" });
+      rows.forEach(([v, refs]) => ul.append(el("li", { text: `${answerLabel(v)}: ${[...new Set(refs)].join(", ")}` })));
+      box.append(ul);
+      qc.append(box);
+    });
+    out.append(qc);
+  }
+  if (a.abstained) {
+    out.append(el("div", { class: "card" }, el("strong", { text: "No matching provision shown. " }), a.message));
+  } else {
+    a.groups.forEach(g => {
+      const wrap = el("div", { class: "group" });
+      wrap.append(el("h3", { text: g.answer_to ? `If the answer is: ${answerLabel(g.answer_to)}` : g.condition }));
+      if (g.answer_to && g.condition) wrap.append(el("div", { class: "meta", text: g.condition }));
+      g.items.forEach(it => wrap.append(itemView(it)));
+      out.append(wrap);
+    });
+  }
+  if (a.notices && a.notices.length) out.append(el("div", { class: "card meta", text: "Notices: " + a.notices.join(" ") }));
+  const lim = el("div", { class: "card" }, el("strong", { text: "Limits" }));
+  const ul = el("ul", { class: "limits" });
+  d.limits.forEach(l => ul.append(el("li", { text: l })));
+  lim.append(ul, el("div", { class: "meta", text: d.disclaimer }));
+  out.append(lim);
+}
+
+fetch("/health").then(r => r.json()).then(d => { $("build").textContent = "build: " + (d.build || "unknown"); }).catch(() => {});
+
+$("f").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const incident = $("incident").value.trim();
+  if (incident.length < 3) return;
+  $("go").disabled = true;
+  out.replaceChildren(el("p", { class: "meta", text: "Working... the first request after a pause can take a minute." }));
+  try {
+    const body = { incident };
+    if ($("date").value) body.incident_date = $("date").value;
+    const r = await fetch("/answer", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    render(await r.json());
+  } catch (err) {
+    out.replaceChildren(el("p", { class: "err", text: "Something went wrong: " + err.message }));
+  } finally {
+    $("go").disabled = false;
+  }
+});
+</script>
+</body>
+</html>
